@@ -10,8 +10,7 @@ articles = {
 
 
 # Create your views here.
-def index(request, topic):
-    result = articles.get(topic)
+def topics(request, topic):
     try:
         return HttpResponse(articles[topic])
     except KeyError:
@@ -21,6 +20,10 @@ def index(request, topic):
 def num_topic(request, num):
     try:
         topic = list(articles.keys())[num]
-        return HttpResponseRedirect(reverse('index', args=[topic]))
+        return HttpResponseRedirect(reverse('topic', args=[topic]))
     except IndexError:
         raise Http404(f"Wrong num")
+
+
+def index(request):
+    return render(request, "my_app/index.html")
