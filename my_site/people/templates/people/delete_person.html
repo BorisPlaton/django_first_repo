@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="{% url 'people:delete_person' %}" method="post">
+    {% csrf_token %}
+    <input type="text" id='pk' name='pk' placeholder="Введите pk">
+    <input type="submit" value="Удалить">
+</form>
+</body>
+</html>

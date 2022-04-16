@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View persons</title>
+</head>
+<body>
+<h2>Список пользователей</h2>
+{% for person in persons %}
+<ul>
+    <li>{{ person }}</li>
+</ul>
+{% endfor %}
+<a href="{% url 'people:create_persons' %}">Добавить новых пользователей</a>
+<a href="{% url 'people:delete_person' %}">Удалить пользователя</a>
+</body>
+</html>
