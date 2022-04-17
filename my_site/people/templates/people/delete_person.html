@@ -1,14 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<form action="{% url 'people:delete_person' %}" method="post">
+{% extends 'people/base.html' %}
+{% block title %}Список пользователей{% endblock %}
+{% block content %}
+<form action="{% url 'people:delete_person' %}" method="post" novalidate>
     {% csrf_token %}
-    <input type="text" id='pk' name='pk' placeholder="Введите pk">
-    <input type="submit" value="Удалить">
+    {% for field in form %}
+    <div class="form-group">
+        {{ field.label_tag }}
+        {{ field }}
+        <div class="invalid_feedback">
+            {% for error in field.errors %}
+                <small class="text-danger">{{ error }}</small>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+    <input class="btn btn-danger mt-3" type="submit" value="Удалить">
 </form>
-</body>
-</html>
+{% endblock %}
+

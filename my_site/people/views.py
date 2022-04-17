@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .models import Person
-from .forms import CreatePersonForm
+from .forms import CreatePersonForm, DeletePersonForm
 
 
 def create_person(request):
@@ -16,10 +16,15 @@ def create_person(request):
 
 
 def delete_person(request):
+    form = DeletePersonForm(request.POST or None)
+    context = {
+        "form": form,
+    }
     if request.POST:
-        Person.objects.get(pk=request.POST["pk"]).delete()
-        return redirect(reverse('people:delete_person'))
-    return render(request, "people/delete_person.html")
+        if form.is_valid():
+            Person.objects.get(pk=form.cleaned_data.get("person")).delete()
+            return redirect(reverse('people:delete_person'))
+    return render(request, "people/delete_person.html", context=context)
 
 
 def view_persons(request):
